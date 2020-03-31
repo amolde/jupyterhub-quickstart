@@ -295,7 +295,7 @@
                                         "value": "${OPENSHIFT_PROJECT}"
                                     },
                                     {
-                                        "name": "JUPYTERHUB_VOLUME_SIZE",
+                                        "name": "_JUPYTERHUB_VOLUME_SIZE",
                                         "value": "${VOLUME_SIZE}"
                                     },
                                     {

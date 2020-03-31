@@ -1,0 +1,96 @@
+apiVersion: build.openshift.io/v1
+kind: ImageStream
+apiVersion: v1
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+    template: application-template-stibuild
+  name: jupyter-notebook-scipy
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+  name: jupyter-notebook-scipy
+spec:
+  source: 
+    git:
+      uri: "https://github.com/amolde/jupyter-notebooks"
+    contextDir: scipy-notebook
+  strategy: 
+    sourceStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "s2i-minimal-notebook:3.6"
+    type: Git
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "jupyter-notebook-scipy:latest"
+---
+apiVersion: build.openshift.io/v1
+kind: ImageStream
+apiVersion: v1
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+    template: application-template-stibuild
+  name: jupyter-notebook-tensorflow
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+  name: jupyter-notebook-tensorflow
+spec:
+  source: 
+    git:
+      uri: "https://github.com/amolde/jupyter-notebooks"
+    contextDir: tensorflow-notebook
+  strategy: 
+    sourceStrategy:
+      from:
+        kind: "ImageStreamTag"
+        name: "s2i-minimal-notebook:3.6"
+    type: Git
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "jupyter-notebook-tensorflow:latest"
+---
+apiVersion: build.openshift.io/v1
+kind: ImageStream
+apiVersion: v1
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+    template: application-template-stibuild
+  name: jupyter-notebook-pyspark
+---
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: custom-jupyter-notebook
+  name: jupyter-notebook-pyspark
+spec:
+  source: 
+    git:
+      uri: "https://github.com/amolde/jupyter-notebooks"
+    contextDir: pyspark-notebook
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker
+  # strategy: 
+  #   sourceStrategy:
+  #     from:
+  #       kind: "ImageStreamTag"
+  #       name: "s2i-minimal-notebook:3.6"
+  #   type: Git
+  output:
+    to:
+      kind: "ImageStreamTag"
+      name: "jupyter-notebook-pyspark:latest"
